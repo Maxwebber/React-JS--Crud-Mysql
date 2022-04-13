@@ -20,7 +20,7 @@ app.post("/register", (req, res) => {
   const { urllogo } = req.body;
   const { nomeresp } = req.body;
 
-  let mysql = "INSERT INTO restaurante ( name, endereco, descritivo, ulrlogo, nomeresp) VALUES (?, ?, ?, ?, ?)";
+  let mysql = "INSERT INTO restaurante ( name, endereco, descritivo, urllogo, nomeresp) VALUES (?, ?, ?, ?, ?)";
   db.query(mysql, [name, endereco, descritivo, urllogo, nomeresp], (err, result) => {
     res.send(result);
   });
