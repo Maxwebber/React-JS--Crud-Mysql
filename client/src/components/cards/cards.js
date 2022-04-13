@@ -11,8 +11,10 @@ export default function Card(props) {
         open={open}
         setOpen={setOpen}
         title={props.name}
-        category={props.category}
-        cost={props.cost}
+        endereco={props.endereco}
+        descritivo={props.descritivo}
+        urllogo={props.urllogo}
+        nomeresp={props.nomeresp}
         listCard={props.listCard}
         setListCard={props.setListCard}
         id={props.id}
@@ -20,8 +22,11 @@ export default function Card(props) {
       <div className="card-container" onClick={() => setOpen(true)}>
         <h1 className="card-title">{props.name}</h1>
         <p className="card-id">{props.id}</p>
-        <p className="card-cartegory">{props.category}</p>
-        <h3 className="card-cost">R${props.cost}</h3>
+        <p className="card-cartegory">{props.endereco}</p>
+        <p className="card-cartegory">{props.descritivo}</p>
+        <p className="card-cartegory">{props.urllogo}</p>
+        <p className="card-cartegory">{props.nomeresp}</p>
+        
       </div>
     </>
   );

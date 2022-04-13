@@ -1,13 +1,13 @@
 const express = require("express");
 const app = express();
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const cors = require("cors");
 
 const db = mysql.createPool({
   host: "localhost",
   user: "root",
-  password: "password",
-  database: "crudgame",
+  password: "root",
+  database: "crudrestaurante",
 });
 
 app.use(express.json());
@@ -15,30 +15,34 @@ app.use(cors());
 
 app.post("/register", (req, res) => {
   const { name } = req.body;
-  const { cost } = req.body;
-  const { category } = req.body;
+  const { endereco } = req.body;
+  const { descritivo } = req.body;
+  const { urllogo } = req.body;
+  const { nomeresp } = req.body;
 
-  let mysql = "INSERT INTO games ( name, cost, category) VALUES (?, ?, ?)";
-  db.query(mysql, [name, cost, category], (err, result) => {
+  let mysql = "INSERT INTO restaurante ( name, endereco, descritivo, ulrlogo, nomeresp) VALUES (?, ?, ?, ?, ?)";
+  db.query(mysql, [name, endereco, descritivo, urllogo, nomeresp], (err, result) => {
     res.send(result);
   });
 });
 
 app.post("/search", (req, res) => {
   const { name } = req.body;
-  const { cost } = req.body;
-  const { category } = req.body;
+  const { endereco } = req.body;
+  const { descritivo } = req.body;
+  const { urllogo } = req.body;
+  const { nomeresp } = req.body;
 
   let mysql =
-    "SELECT * from games WHERE name = ? AND cost = ? AND category = ?";
-  db.query(mysql, [name, cost, category], (err, result) => {
+    "SELECT * from restaurante WHERE name = ? AND endereco = ? AND descritivo = ? AND urllogo = ? AND nomeresp = ?";
+  db.query(mysql, [name, endereco, descritivo, urllogo, nomeresp], (err, result) => {
     if (err) res.send(err);
     res.send(result);
   });
 });
 
 app.get("/getCards", (req, res) => {
-  let mysql = "SELECT * FROM games";
+  let mysql = "SELECT * FROM restaurante";
   db.query(mysql, (err, result) => {
     if (err) {
       console.log(err);
@@ -51,10 +55,13 @@ app.get("/getCards", (req, res) => {
 app.put("/edit", (req, res) => {
   const { id } = req.body;
   const { name } = req.body;
-  const { cost } = req.body;
-  const { category } = req.body;
-  let mysql = "UPDATE games SET name = ?, cost = ?, category = ? WHERE id = ?";
-  db.query(mysql, [name, cost, category, id], (err, result) => {
+  const { endereco } = req.body;
+  const { descritivo } = req.body;
+  const { urllogo } = req.body;
+  const { nomeresp } = req.body;
+
+  let mysql = "UPDATE restaurante SET name = ?, endereco = ?, descritivo = ? urllogo = ?, nomeresp = ? = WHERE id = ?";
+  db.query(mysql, [name, endereco, descritivo,urllogo, nomeresp, id], (err, result) => {
     if (err) {
       res.send(err);
     } else {
@@ -65,11 +72,11 @@ app.put("/edit", (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const { id } = req.params;
-  let mysql = "DELETE FROM games WHERE id = ?";
+  let mysql = "DELETE FROM restaurante WHERE id = ?";
   db.query(mysql, id, (err, result) => {
     if (err) {
       console.log(err);
-    } else {
+    } else {''
       res.send(result);
     }
   });

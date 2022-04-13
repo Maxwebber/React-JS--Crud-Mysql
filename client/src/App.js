@@ -7,24 +7,30 @@ export default function App() {
   const [values, setValues] = useState();
   const [listCard, setListCard] = useState([]);
   console.log(listCard);
-  const handleRegisterGame = () => {
+  const handleRegisterRestaurante = () => {
     Axios.post("http://localhost:3001/register", {
       name: values.name,
-      cost: values.cost,
-      category: values.category,
+      endereco: values.endereco,
+      descritivo: values.descritivo,
+      urllogo: values.urllogo,
+      nomeresp: values.nomeresp,
     }).then(() => {
       Axios.post("http://localhost:3001/search", {
         name: values.name,
-        cost: values.cost,
-        category: values.category,
+        endereco: values.endereco,
+        descritivo: values.descritivo,
+        urllogo: values.urllogo,
+        nomeresp: values.nomeresp,
       }).then((response) => {
         setListCard([
           ...listCard,
           {
             id: response.data[0].id,
             name: values.name,
-            cost: values.cost,
-            category: values.category,
+            endereco: values.endereco,
+            descritivo: values.descritivo,
+            urllogo: values.urllogo,
+            nomeresp: values.nomeresp,
           },
         ]);
       });
@@ -47,8 +53,9 @@ export default function App() {
   return (
     <div className="app-container">
       <div className="register-container">
-        <h1 className="register-title">Scrim Shop</h1>
-
+        <h1 className="register-title">Jason's food</h1>
+        <h3 className="register-title">Cadastro Restaurante</h3>
+        
         <input
           type="text"
           name="name"
@@ -58,20 +65,34 @@ export default function App() {
         />
         <input
           type="text"
-          placeholder="Preço"
-          name="cost"
+          placeholder="Endereço"
+          name="endereco"
           className="register-input"
           onChange={handleaddValues}
         />
         <input
           type="text"
-          placeholder="Categoria"
-          name="category"
+          placeholder="Descrição"
+          name="descritivo"
+          className="register-input"
+          onChange={handleaddValues}
+        />
+        <input
+          type="text"
+          placeholder="Url da logo"
+          name="urllogo"
+          className="register-input"
+          onChange={handleaddValues}
+        />
+        <input
+          type="text"
+          placeholder="Nome do Responsável"
+          name="nomeresp"
           className="register-input"
           onChange={handleaddValues}
         />
 
-        <button onClick={handleRegisterGame} className="register-button">
+        <button onClick={handleRegisterRestaurante} className="register-button">
           Cadastrar
         </button>
       </div>
@@ -83,8 +104,10 @@ export default function App() {
           key={val.id}
           id={val.id}
           name={val.name}
-          cost={val.cost}
-          category={val.category}
+          endereco={val.endereco}
+          descritivo={val.descritivo}
+          urllogo={val.urllogo}
+          nomeresp={val.nomeresp}
         />
       ))}
     </div>

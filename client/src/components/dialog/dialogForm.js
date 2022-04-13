@@ -12,8 +12,10 @@ export default function FormDialog(props) {
   const [editValues, setEditValues] = useState({
     id: props.id,
     name: props.title,
-    cost: props.cost,
-    category: props.category,
+    endereco: props.endereco,
+    descritivo: props.descritivo,
+    urllogo: props.urllogo,
+    nomeresp: props.nomeresp,
   });
 
   const handleChangeValues = (values) => {
@@ -27,12 +29,15 @@ export default function FormDialog(props) {
     props.setOpen(false);
   };
 
-  const handleEditGame = () => {
+  const handleEditRestaurante = () => {
     Axios.put("http://localhost:3001/edit", {
       id: editValues.id,
       name: editValues.name,
-      cost: editValues.cost,
-      category: editValues.category,
+      endereco: editValues.endereco,
+      descritivo: editValues.descritivo,
+      urllogo: editValues.urllogo,
+      nomeresp: editValues.nomeresp,
+
     }).then(() => {
       props.setListCard(
         props.listCard.map((value) => {
@@ -40,8 +45,10 @@ export default function FormDialog(props) {
             ? {
                 id: editValues.id,
                 name: editValues.name,
-                cost: editValues.cost,
-                category: editValues.category,
+                endereco: editValues.endereco,
+                descritivo: editValues.descritivo,
+                urllogo: editValues.urllogo,
+                nomeresp: editValues.nomeresp,
               }
             : value;
         })
@@ -50,7 +57,7 @@ export default function FormDialog(props) {
     handleClose();
   };
 
-  const handleDeleteGame = () => {
+  const handleDeleteRestaurante = () => {
     Axios.delete(`http://localhost:3001/delete/${editValues.id}`).then(() => {
       props.setListCard(
         props.listCard.filter((value) => {
@@ -83,7 +90,7 @@ export default function FormDialog(props) {
             autoFocus
             margin="dense"
             id="name"
-            label="Nome do jogo"
+            label="Nome"
             defaultValue={props.title}
             type="text"
             onChange={handleChangeValues}
@@ -92,19 +99,39 @@ export default function FormDialog(props) {
           <TextField
             autoFocus
             margin="dense"
-            id="cost"
-            label="preço"
-            defaultValue={props.cost}
-            type="number"
+            id="endereco"
+            label="Endereço"
+            defaultValue={props.endereco}
+            type="text"
             onChange={handleChangeValues}
             fullWidth
           />
           <TextField
             autoFocus
             margin="dense"
-            id="category"
-            label="Categoria"
-            defaultValue={props.category}
+            id="descritivo"
+            label="Descrição"
+            defaultValue={props.descritivo}
+            type="text"
+            onChange={handleChangeValues}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="urllogo"
+            label="Url"
+            defaultValue={props.urllogo}
+            type="text"
+            onChange={handleChangeValues}
+            fullWidth
+          />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="nomeresp"
+            label="Nome do Dono"
+            defaultValue={props.nomeresp}
             type="text"
             onChange={handleChangeValues}
             fullWidth
@@ -114,10 +141,10 @@ export default function FormDialog(props) {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button color="primary" onClick={() => handleDeleteGame()}>
+          <Button color="primary" onClick={() => handleDeleteRestaurante()}>
             Excluir
           </Button>
-          <Button color="primary" onClick={() => handleEditGame()}>
+          <Button color="primary" onClick={() => handleEditRestaurante()}>
             Salvar
           </Button>
         </DialogActions>
